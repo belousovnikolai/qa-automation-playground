@@ -11,15 +11,14 @@ test('User can log in with valid credentials', async ({ page }) => {
   await loginPage.open();
   await loginPage.login(testUser);
 
-  await homePage.expectLoggedIn();
+  await expect(homePage.isLoggedIn()).toBeVisible();
 })
 
 test('User cannot login with invalid password', async ({ page }) => {
   const loginPage = new LoginPage(page);
-  const homePage = new HomePage(page);
 
   await loginPage.open();
   await loginPage.login(invalidPasswordUser);
 
-  await loginPage.getLoginError();
+  await expect(loginPage.getLoginError()).toBeVisible();
 })
